@@ -3,6 +3,11 @@ const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
 const app = express();
+const mongooose = require('mongoose');
+
+mongooose.connect(process.env.MONGO_URI)
+.then(() => console.log('DB Connected (ﾉ^ヮ^)ﾉ*:･ﾟ✧'))
+.catch(err => console.log(err))
 
 const orderTicketRouter = require('./routers/orderTicketRouter');
 const portfolioRouter = require('./routers/portfolioRouter');

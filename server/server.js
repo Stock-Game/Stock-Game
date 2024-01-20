@@ -5,7 +5,7 @@ const env = require('dotenv').config();
 const app = express();
 
 const orderTicketRouter = require('./routers/orderTicketRouter');
-const portfolioRouter = require('./routers/portfolioRouter');
+// const portfolioRouter = require('./routers/portfolioRouter');
 
 const PORT = process.env.PORT;
 
@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.static(path.resolve(__dirname, '../client/static')));
 
 app.use('/orderTicket', orderTicketRouter);
-app.use('/portfolio', portfolioRouter);
+// app.use('/portfolio', portfolioRouter);
 
 app.use((req, res) => {
   res.status(400).send('This is not where you trade le stonks');

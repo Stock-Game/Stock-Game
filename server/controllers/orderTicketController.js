@@ -21,7 +21,7 @@ orderTicketController.getPrice = (req, res, next) => {
         symbol: data[0].symbol,
         price: data[0].price,
       };
-      res.status(200).json(resultData);
+      res.locals.getPrice = resultData;
       return next();
     })
     .catch((err) => {

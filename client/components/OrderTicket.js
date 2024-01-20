@@ -4,12 +4,13 @@ import axios from 'axios';
 export default function OrderTicket() {
   // set state
   const [ticker, setTicker] = useState('');
-  const [order, setOrder] = useState([]);
-
-  const myOrder = () => {
-    //
-
-  }
+  const [order, setOrder] = useState({
+    ticker: '',
+    price: '',
+    quantity: 0,
+    total: '',
+    action: 'buy',
+  });
 
   // onchange update
   const handleTickerChange = (e) => {
@@ -24,41 +25,118 @@ export default function OrderTicket() {
   };
 
   const axiosFetchData = async () => {
-    console.log('fetching data...')
     await axios
-      .get(`http://localhost:4000/orderTicket`, { params: { ticker: ticker.toUpperCase() } })
-      .then((res) => {
-        console.log('response: ', res);
+      .get(`http://localhost:4000/orderTicket`, {
+        params: { ticker: ticker.toUpperCase() },
       })
-      .catch((err) => console.log('error: ', err)); 
+      .then((res) => {
+        setOrder({
+          ...order,
+          ticker: res.data.symbol,
+          price: res.data.price,
+        });
+      })
+      .catch((err) => console.log('error: ', err));
   };
 
   return (
     <>
       <h1>Trade</h1>
       <div>
-        <form onSubmit={handleSubmit}>
-          <div className='formRow'>
-            <textarea
-              placeholder='Enter a stock ticker'
-              value={ticker}
-              onChange={handleTickerChange}
-            />
-            <button disabled={ticker.length === 0}>Submit</button>
-          </div>
-          <div className='formRow'>
-            <p></p>
-          </div>
-        </form>
-        {/* Stock Ticker (textarea) */}
-        {/* Submit (button) - get request w/ ticker as req.param */}
-        {/* Render after submit... */}
-        {/* Stock Ticker (p text from above) */}
-        {/* Price per share (p number from API) */}
-        {/* Quantity (textarea) */}
-        {/* Total Price (p number calculated by price times quantity) */}
-        {/* Action (drop down) */}
-        {/* Submit (button down) - post request w/ info in req.body*/}
+        <div className='orderBox'>
+          <form onSubmit={handleSubmit}>
+            <div className='row'>
+              <textarea
+                placeholder='Enter a stock ticker'
+                rows='1'
+                value={ticker}
+                onChange={handleTickerChange}
+              />
+              <button disabled={ticker.length === 0}>Submit</button>
+            </div>
+          </form>
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <strong>Ticker</strong>
+                </td>
+                <td>{order.ticker}</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Price</strong>
+                </td>
+                <td>{order.price}</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Quantity</strong>
+                </td>
+                <td>
+                  <input
+                    type='number'
+                    value={order.quantity || ''}
+                    onChange={(e) => {
+                      setOrder({
+                        ...order,
+                        quantity: Math.max(e.target.value, 1),
+                        total: order.quantity * order.price
+                      });
+                    }}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Total Transaction Amount</strong>
+                </td>
+                <td>{order.price * order.quantity || ''}</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Action</strong>
+                </td>
+                <td>
+                  {/* create a select */}
+                  <select
+                    value={order.action}
+                    onChange={(e) => {
+                      setOrder({
+                        ...order,
+                        action: e.target.value,
+                      });
+                    }}
+                  >
+                    <option value='buy'>Buy</option>
+                    <option value='sell'>Sell</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>
+                  <button
+                    onClick={() => {
+                      setOrder({
+                        ticker: '',
+                        price: '',
+                        quantity: 0,
+                        total: '',
+                        action: '',
+                      });
+                      // some other function
+                      console.log(`Placing a ${order.action} order for ${order.quantity} shares of ${order.ticker} at ${order.price}`);
+                    }}
+                    disabled={order.total === ''}
+                  >
+                    Submit
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );

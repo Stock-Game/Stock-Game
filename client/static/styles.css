@@ -1,0 +1,13 @@
+#portfolioticket {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  height: 40px;
+  border: 2px solid black;
+  justify-content: space-around;
+  margin-bottom: 8px;
+  align-items: center;
+}
+.purchasePrice {
+  width: 50px;
+}

@@ -4,6 +4,7 @@ require('dotenv').config();
 const cors = require('cors');
 const app = express();
 
+// const newsRouter = require('./routers/newsRouter');
 const orderTicketRouter = require('./routers/orderTicketRouter');
 const portfolioRouter = require('./routers/portfolioRouter');
 
@@ -22,18 +23,19 @@ app.use(express.json());
 
 app.use(express.static(path.resolve(__dirname, '../client/static')));
 
-app.use('/orderTicket', orderTicketRouter);
+// app.use('/news', newsRouter);
+app.use('/orderticket/', orderTicketRouter);
 app.use('/portfolio', portfolioRouter);
 
-app.use((req, res) => {
-  res.status(400).send('This is not where you trade le stonks');
+app.get('/', (req, res) => {
+  return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
 });
 
-app.use((req, res, next) => {
-  res.status(404).send('Not Found');
-});
+// app.use((req, res, next) => {
+//   return res.status(404).send('This is not where you trade le stonks');
+// });
 
-app.use((req, res, next, err) => {
+app.use((err, req, res, next) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error.',
     status: 500,

@@ -18,6 +18,7 @@ orderTicketController.getPrice = (req, res, next) => {
       const resultData = {
         symbol: data[0].symbol,
         price: data[0].price,
+        volume: data[0].volume,
       };
       res.locals.getPrice = resultData;
       return next();

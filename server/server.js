@@ -5,9 +5,10 @@ const cors = require('cors');
 const app = express();
 const mongooose = require('mongoose');
 
-mongooose.connect(process.env.MONGO_URI)
-.then(() => console.log('DB Connected (ﾉ^ヮ^)ﾉ*:･ﾟ✧'))
-.catch(err => console.log(err))
+mongooose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log('DB Connected (ﾉ^ヮ^)ﾉ*:･ﾟ✧'))
+  .catch((err) => console.log(err));
 
 // const newsRouter = require('./routers/newsRouter');
 const orderTicketRouter = require('./routers/orderTicketRouter');
@@ -36,9 +37,9 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
 });
 
-// app.use((req, res, next) => {
-//   return res.status(404).send('This is not where you trade le stonks');
-// });
+app.use((req, res, next) => {
+  return res.status(404).send('This is not where you trade le stonks');
+});
 
 app.use((err, req, res, next) => {
   const defaultErr = {

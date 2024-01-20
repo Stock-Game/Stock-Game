@@ -1,16 +1,20 @@
 const express = require('express');
-const portfolio = require('../controllers/portfolioController');
+const portfolioController = require('../controllers/portfolioController');
 const router = express.Router();
 
-// router.post('/', portfolio.buy, (req, res, next) => {
-//   console.log('---> ENTERING PORTFOLIO BUY ROUTER <---');
-//   return res.status(201);
-// });
+router.post('/', portfolioController.buy, (req, res, next) => {
+  console.log('---> ENTERING PORTFOLIO BUY ROUTER <---');
+  return res.status(201);
+});
 
-// router.delete('/', portfolio.sell, (req, res, next) => {
-//   console.log('---> ENTERING PORTFOLIO SELL ROUTER <---');
-// });
+router.delete('/', portfolioController.sell, (req, res, next) => {
+  console.log('---> ENTERING PORTFOLIO SELL ROUTER <---');
+  return res.status(204);
+});
 
-// router.get('/', portfolio.read, (req, res, next) => {
-//   console.log('---> ENTERING PORTFOLIO READ ROUTER <---');
-// });
+router.get('/', portfolioController.read, (req, res, next) => {
+  console.log('---> ENTERING PORTFOLIO READ ROUTER <---');
+  return res.status(200);
+});
+
+module.exports = router;

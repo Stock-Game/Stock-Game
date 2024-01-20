@@ -1,6 +1,6 @@
 const path = require('path');
 const express = require('express');
-const env = require('dotenv').config();
+require('dotenv').config();
 
 const app = express();
 
@@ -19,6 +19,10 @@ app.use('/portfolio', portfolioRouter);
 
 app.use((req, res) => {
   res.status(400).send('This is not where you trade le stonks');
+});
+
+app.use((req, res, next) => {
+  res.status(404).send('Not Found');
 });
 
 app.use((req, res, next, err) => {

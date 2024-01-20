@@ -3,10 +3,10 @@ const axios = require('axios');
 
 orderTicketController.getPrice = (req, res, next) => {
   console.log('---> ENTERING ORDER TICKET CONTROLLER GET PRICE <---');
-  console.log(req.params);
+  console.log(req.query);
   // enter API data here
   const url1 = 'https://financialmodelingprep.com/api/v3/quote/';
-  const ticker = req.params;
+  const ticker = req.query;
   const url2 = '?apikey=v7vj7VtmFoqsC2wdxnvVhctwVAhs5V8H';
   const dynamicUrl = url1 + ticker + url2;
   // const staticUrl =
@@ -21,7 +21,7 @@ orderTicketController.getPrice = (req, res, next) => {
         symbol: data[0].symbol,
         price: data[0].price,
       };
-      res.status(200).json(resultData);
+      res.locals.getPrice = resultData;
       return next();
     })
     .catch((err) => {

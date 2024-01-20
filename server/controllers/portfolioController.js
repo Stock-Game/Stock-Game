@@ -2,6 +2,7 @@ const portfolioController = {};
 
 portfolioController.buy = (req, res, next) => {
   console.log('---> ENTERING PORTFOLIO CONTROLLER BUY <---');
+  
   const response = console.log('this is a buy response');
   res.locals.buy = response;
   return next();

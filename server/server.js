@@ -1,13 +1,21 @@
 const path = require('path');
 const express = require('express');
 require('dotenv').config();
-
+const cors = require('cors');
 const app = express();
 
 const orderTicketRouter = require('./routers/orderTicketRouter');
 const portfolioRouter = require('./routers/portfolioRouter');
 
 const PORT = process.env.PORT;
+
+const corsOptions = {
+  origin: '*',
+  credentials: true,
+  optionSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

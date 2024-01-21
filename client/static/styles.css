@@ -1,0 +1,35 @@
+#portfolioticket {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  height: 40px;
+  border: 2px solid black;
+  justify-content: space-around;
+  margin-bottom: 8px;
+  align-items: center;
+}
+.purchasePrice {
+  width: 50px;
+}
+
+.orderBox {
+  border: solid black 2px;
+  width: 25rem;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+}
+
+td, tr {
+  /* padding-top: 10px; */
+  padding: 5px;
+}
+
+textarea {
+  resize: none;
+  margin: 10px;
+}

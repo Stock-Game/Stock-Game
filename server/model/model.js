@@ -12,3 +12,5 @@ const portfolioSchema = new Schema({
   shares: {type: Number, required: true},
   totalCost: this.priceBought*this.shares //or {type: Date, default: this.priceBought*this.shares}??
 })
+
+module.exports = mongoose.model('portfolio', portfolioSchema);

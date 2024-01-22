@@ -32,6 +32,12 @@
   width: 90%;
   margin-left: 20px;
 }
+#quantitystyle {
+  marginright: '8px';
+}
+#valuestyle {
+  marginright: '4px';
+}
 .ticketcells,
 td,
 tr {

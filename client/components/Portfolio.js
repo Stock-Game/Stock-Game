@@ -18,6 +18,8 @@ export default function Portfolio() {
 
   const [prices, setPrices] = useState([]);
 
+  const [balance, setBalance] = useState({});
+
   useEffect(() => {
     getPortfolioData();
   }, []);
@@ -46,6 +48,8 @@ export default function Portfolio() {
       });
   };
 
+  const getBalanceData = () => {};
+
   return (
     // all styling will likely be moved to a css file, it's just not being served yet (i think)
     <>
@@ -66,10 +70,10 @@ export default function Portfolio() {
             <tr id='titlerow'>
               <td className='ticketkey'>Ticker</td>
               <td className='ticketkey'>Price</td>
-              <td className='ticketkey' style={{ marginRight: '8px' }}>
+              <td className='ticketkey' id='quantitystyle'>
                 Quantity
               </td>
-              <td className='ticketkey' style={{ marginRight: '4px' }}>
+              <td className='ticketkey' id='valuestyle'>
                 Total Value
               </td>
               <td className='ticketkey'>Profit/Loss</td>

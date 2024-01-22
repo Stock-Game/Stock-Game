@@ -3,7 +3,7 @@
   flex-direction: row;
   width: 90%;
   height: 40px;
-  border: 2px solid white;
+  border: 2px solid rgb(0, 0, 0);
   justify-content: space-around;
   margin-bottom: 8px;
   align-items: center;
@@ -53,9 +53,44 @@ div {
   margin-right: 10px;
 }
 
+#portfoliocontainer {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid white;
+  width: 400px;
+  align-items: center;
+  padding-top: 8px;
+  color: black;
+  background-color: white;
+  border-radius: 15px;
+}
+
 .orderBox {
   border: solid white 2px;
   width: 25rem;
+  background-color: white;
+  color: black;
+  border-radius: 15px;
+}
+
+.totalsBox {
+  border: solid white 2px;
+  width: 25rem;
+  height: 14.5rem;
+  background-color: white;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: 15px;
+}
+
+#totalP {
+  display: flex;
+  flex-direction: column;
+  /* margin-top: 2em; */
+  /* margin: 1em; */
 }
 
 body {
@@ -80,7 +115,8 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: left;
+  justify-content: center;
+  gap: 10em;
 }
 
 td,

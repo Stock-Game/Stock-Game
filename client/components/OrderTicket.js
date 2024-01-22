@@ -39,6 +39,26 @@ export default function OrderTicket() {
       .catch((err) => console.log('error: ', err));
   };
 
+  const submitOrder = async () => {
+    const postData = {
+      ticker: order.ticker,
+      priceBought: order.price,
+      shares: order.quantity,
+      totalCost: order.total,
+    };
+    if (order.action === 'buy') {
+        // buy route = post
+      await axios
+        .post(`http://localhost:4000/portfolio`, postData)
+        .catch((err) => console.log('error: ', err));
+    } else if (order.action === 'sell') {
+      // sell route = delete
+      await axios
+        .delete(`http://localhost:4000/portfolio`, {data: postData})
+        .catch((err) => console.log('error: ', err));
+    }
+  };
+
   return (
     <>
       <h1>Trade</h1>
@@ -81,7 +101,7 @@ export default function OrderTicket() {
                       setOrder({
                         ...order,
                         quantity: Math.max(e.target.value, 1),
-                        total: order.quantity * order.price
+                        total: order.quantity * order.price,
                       });
                     }}
                   />
@@ -125,8 +145,10 @@ export default function OrderTicket() {
                         total: '',
                         action: '',
                       });
-                      // some other function
-                      console.log(`Placing a ${order.action} order for ${order.quantity} shares of ${order.ticker} at ${order.price}`);
+                      console.log(
+                        `Placing a ${order.action} order for ${order.quantity} shares of ${order.ticker} at ${order.price}`
+                      );
+                      submitOrder();
                     }}
                     disabled={order.total === ''}
                   >

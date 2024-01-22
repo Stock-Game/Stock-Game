@@ -4,14 +4,14 @@ const axios = require('axios');
 orderTicketController.getPrice = (req, res, next) => {
   console.log('---> ENTERING ORDER TICKET CONTROLLER GET PRICE <---');
   console.log(req.query);
-  // const url1 = 'https://financialmodelingprep.com/api/v3/quote/';
-  // const ticker = req.query
-  // const url2 = '?apikey=v7vj7VtmFoqsC2wdxnvVhctwVAhs5V8H';
-  // const dynamicUrl = url1 + ticker + url2;
-  const staticUrl =
-    'https://financialmodelingprep.com/api/v3/quote/META?apikey=v7vj7VtmFoqsC2wdxnvVhctwVAhs5V8H';
+  const url1 = 'https://financialmodelingprep.com/api/v3/quote/';
+  const ticker = req.query;
+  const url2 = '?apikey=v7vj7VtmFoqsC2wdxnvVhctwVAhs5V8H';
+  const dynamicUrl = url1 + ticker + url2;
+  // const staticUrl =
+  //   'https://financialmodelingprep.com/api/v3/quote/META?apikey=v7vj7VtmFoqsC2wdxnvVhctwVAhs5V8H';
   axios
-    .get(staticUrl)
+    .get(dynamicUrl)
     .then((response) => {
       const data = response.data;
       console.log('respose.data: ', response.data);

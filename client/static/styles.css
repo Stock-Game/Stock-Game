@@ -38,6 +38,10 @@ tr {
   flex: 1;
 }
 
+h1 {
+  margin-left: 5px;
+}
+
 div {
   margin-left: 5px;
   margin-right: 10px;

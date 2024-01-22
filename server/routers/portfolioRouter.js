@@ -14,7 +14,13 @@ router.delete('/', portfolioController.sell, (req, res, next) => {
 
 router.get('/', portfolioController.read, (req, res, next) => {
   console.log('---> ENTERING PORTFOLIO READ ROUTER <---');
-  return res.status(200).json(res.locals.read);
+  // note from Kevin: I changed res.locals.read to res.locals.stockList, since I'm pretty sure that was the intent of
+  // whoever wrote this.
+  return res.status(200).json(res.locals.stockList);
+});
+
+router.get('/sync', portfolioController.sync, (req, res) => {
+  return res.status(200).json(res.locals.syncedData);
 });
 
 module.exports = router;

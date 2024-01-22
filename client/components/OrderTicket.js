@@ -21,6 +21,7 @@ export default function OrderTicket() {
     // get request to server with ticker in req.params
     e.preventDefault();
     axiosFetchData();
+    axiosSyncData();
     setTicker('');
   };
 
@@ -39,6 +40,12 @@ export default function OrderTicket() {
       .catch((err) => console.log('error: ', err));
   };
 
+  const axiosSyncData = async () => {
+    await axios
+      .get('http://localhost:4000/portfolio/sync')
+      .catch((err) => console.log(err));
+  };
+
   const submitOrder = async () => {
     const postData = {
       ticker: order.ticker,
@@ -47,14 +54,14 @@ export default function OrderTicket() {
       totalCost: order.total,
     };
     if (order.action === 'buy') {
-        // buy route = post
+      // buy route = post
       await axios
         .post(`http://localhost:4000/portfolio`, postData)
         .catch((err) => console.log('error: ', err));
     } else if (order.action === 'sell') {
       // sell route = delete
       await axios
-        .delete(`http://localhost:4000/portfolio`, {data: postData})
+        .delete(`http://localhost:4000/portfolio`, { data: postData })
         .catch((err) => console.log('error: ', err));
     }
   };

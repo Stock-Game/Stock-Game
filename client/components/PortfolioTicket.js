@@ -12,7 +12,7 @@ export default function PortfolioTicket(props) {
       </td>
       <td className='ticketcells'>{props.ticketInfo.shares}</td>
       <td className='ticketcells'>
-        ${props.ticketInfo.totalCost.toLocaleString('en-US')}
+        ${Math.floor(props.ticketInfo.totalCost).toLocaleString('en-US')}
       </td>
       <td className='ticketcells'>
         $

@@ -18,9 +18,19 @@ export default function Portfolio() {
 
   const [prices, setPrices] = useState([]);
 
+  const [balance, setBalance] = useState({
+    totalVal: 0,
+    cash: 200000,
+    portfolioBal: 100000,
+  });
+
   useEffect(() => {
     getPortfolioData();
   }, []);
+
+  useEffect(() => {
+    getBalanceData();
+  }, [positionArr]);
 
   const getPortfolioData = () => {
     fetch('http://localhost:4000/portfolio', {
@@ -46,6 +56,26 @@ export default function Portfolio() {
       });
   };
 
+  const getBalanceData = () => {
+    let priceBought = 0;
+    let totalPortVal = 0;
+    positionArr.forEach((el) => {
+      const thisPriceInfo = prices.find((element) => {
+        return el.ticker === element.ticker;
+      });
+      console.log('this price info: ', thisPriceInfo);
+      priceBought += el.priceBought * el.shares;
+      totalPortVal += thisPriceInfo.price * el.shares;
+    });
+    const cash = 200000 - priceBought;
+    console.log('price bought: ', priceBought);
+    setBalance({
+      totalVal: totalPortVal,
+      cash,
+      portfolioBal: cash + totalPortVal,
+    });
+  };
+
   return (
     // all styling will likely be moved to a css file, it's just not being served yet (i think)
     <>
@@ -66,10 +96,10 @@ export default function Portfolio() {
             <tr id='titlerow'>
               <td className='ticketkey'>Ticker</td>
               <td className='ticketkey'>Price</td>
-              <td className='ticketkey' style={{ marginRight: '8px' }}>
+              <td className='ticketkey' id='quantitystyle'>
                 Quantity
               </td>
-              <td className='ticketkey' style={{ marginRight: '4px' }}>
+              <td className='ticketkey' id='valuestyle'>
                 Total Value
               </td>
               <td className='ticketkey'>Profit/Loss</td>
@@ -90,7 +120,7 @@ export default function Portfolio() {
           </tbody>
         </table>
       </div>
-      <BalancesDisplay balanceInfo={testBalance} />
+      <BalancesDisplay balanceInfo={balance} />
     </>
   );
 }

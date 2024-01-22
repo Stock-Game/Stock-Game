@@ -1,0 +1,89 @@
+#portfolioticket {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  height: 40px;
+  border: 2px solid white;
+  justify-content: space-around;
+  margin-bottom: 8px;
+  align-items: center;
+}
+#purchasePrice {
+  width: 50px;
+}
+#portfoliotable {
+  width: 100%;
+}
+#porttablebody {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+#titlerow {
+  font-size: 12px;
+  width: 80%;
+  display: flex;
+  justify-content: space-around;
+}
+#titlehead {
+  display: flex;
+  justify-content: center;
+  width: 90%;
+  margin-left: 20px;
+}
+.ticketcells,
+td,
+tr {
+  flex: 1;
+}
+
+h1 {
+  margin-left: 5px;
+}
+
+div {
+  margin-left: 5px;
+  margin-right: 10px;
+}
+
+.orderBox {
+  border: solid white 2px;
+  width: 25rem;
+}
+
+body {
+  background-color: #323a56;
+  color: white;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+}
+
+.row img {
+  padding: 10px;
+  margin-right: 20px;
+  border: solid white 2px;
+}
+
+.row2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+}
+
+td,
+tr {
+  /* padding-top: 10px; */
+  padding: 5px;
+}
+
+textarea {
+  resize: none;
+  margin: 10px;
+}

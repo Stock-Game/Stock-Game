@@ -25,27 +25,49 @@ export default function NewsDisplay() {
   ];
 
   const [reddit, setReddit] = useState(fakeData);
-  
-  console.log
+  // update using get request to /news
+  const axiosFetchReddit = async () => {
+    await axios
+      .get(`http://localhost:4000/news`)
+      .then((res) => {
+
+        // setReddit(res.data);
+        console.log('reddit response', res);
+      })
+      .catch((err) => console.log('error: ', err));
+  };
+
+  axiosFetchReddit();
 
   return (
     <>
-      <h1>r/WallStreetBets: Top 5 most bullish</h1>
+      <h1>r/WallStreetBets: Top stock ideas</h1>
       <table>
         <tbody>
           <tr>
             <th>Ticker</th>
+            <th>Sentiment</th>
             <th>Number of comments</th>
             <th>Sentiment score</th>
           </tr>
-          {reddit.map((el) => {
-            // map through and render
-            <tr>
-              <td>{el.ticker}</td>
-              <td>{el.no_of_comments}</td>
-              <td>{el.sentiment_score}</td>
-            </tr>;
-          })}
+          <tr>
+            <td>{reddit[0].ticker}</td>
+            <td>{reddit[0].sentiment}</td>
+            <td>{reddit[0].no_of_comments}</td>
+            <td>{reddit[0].sentiment_score}</td>
+          </tr>
+          <tr>
+            <td>{reddit[1].ticker}</td>
+            <td>{reddit[1].sentiment}</td>
+            <td>{reddit[1].no_of_comments}</td>
+            <td>{reddit[1].sentiment_score}</td>
+          </tr>
+          <tr>
+            <td>{reddit[2].ticker}</td>
+            <td>{reddit[2].sentiment}</td>
+            <td>{reddit[2].no_of_comments}</td>
+            <td>{reddit[2].sentiment_score}</td>
+          </tr>
         </tbody>
       </table>
     </>

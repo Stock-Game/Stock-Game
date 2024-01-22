@@ -10,7 +10,7 @@ mongooose
   .then(() => console.log('DB Connected (ﾉ^ヮ^)ﾉ*:･ﾟ✧'))
   .catch((err) => console.log(err));
 
-// const newsRouter = require('./routers/newsRouter');
+const newsRouter = require('./routers/newsRouter');
 const orderTicketRouter = require('./routers/orderTicketRouter');
 const portfolioRouter = require('./routers/portfolioRouter');
 
@@ -29,7 +29,7 @@ app.use(express.json());
 
 app.use(express.static(path.resolve(__dirname, '../client/static')));
 
-// app.use('/news', newsRouter);
+app.use('/news', newsRouter);
 app.use('/orderticket/', orderTicketRouter);
 app.use('/portfolio', portfolioRouter);
 

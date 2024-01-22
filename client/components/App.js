@@ -16,7 +16,7 @@ export default function App() {
         <h1>Trading Simulator</h1>
       </div>
       <br />
-      <h1>Purchase a stock:</h1>
+      <h1>Buy or sell a stock:</h1>
       <div className='row2'>
         <OrderTicket />
         <Portfolio />

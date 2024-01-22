@@ -1,5 +1,7 @@
 const portfolioController = {};
+const axios = require('axios');
 const model = require('../model/model.js');
+const Price = require('../model/priceModel.js');
 
 portfolioController.buy = async (req, res, next) => {
   try {
@@ -64,11 +66,52 @@ portfolioController.read = async (req, res, next) => {
   try {
     const stockList = await model.find();
     console.log(stockList);
-    res.locals.stockList = stockList;
+    const priceList = await Price.find();
+    res.locals.stockList = [stockList, priceList];
     return next();
   } catch (err) {
     return next({
       log: 'Error occurred in the portfolio read controller.',
+      status: 500,
+      message: { err: 'An error occurred.' },
+    });
+  }
+};
+
+portfolioController.sync = async (req, res, next) => {
+  console.log('---> ENTERING PORTFOLIO CONTROLLER SYNC <---');
+  const url1 = 'https://financialmodelingprep.com/api/v3/quote/';
+  const url2 = '?apikey=v7vj7VtmFoqsC2wdxnvVhctwVAhs5V8H';
+  const newData = [];
+  try {
+    const stockList = await model.find();
+    const prices = await Price.find();
+    const priceTickers = prices.map((el) => el.ticker);
+    newData.push(prices);
+    console.log('stock list', stockList);
+    console.log('price tickers', priceTickers);
+    stockList.forEach((el) => {
+      if (!priceTickers.includes(el.ticker)) {
+        const dynamicUrl = url1 + el.ticker + url2;
+        axios.get(dynamicUrl).then((response) => {
+          const data = response.data;
+          console.log('logging from portfolioController.sync', data);
+          Price.create({
+            ticker: data[0].symbol,
+            price: data[0].price,
+          }).then((data) => {
+            newData.push(data);
+          });
+        });
+      }
+    });
+    console.log(newData);
+    res.locals.syncedData = newData;
+    return next();
+  } catch (err) {
+    console.log(err);
+    return next({
+      log: 'Error occurred in the portfolio sync controller.',
       status: 500,
       message: { err: 'An error occurred.' },
     });

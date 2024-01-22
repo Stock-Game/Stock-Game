@@ -8,40 +8,19 @@ import BalancesDisplay from './BalancesDisplay';
 // and pass all position info down to PortfolioTicket components thru props
 
 export default function Portfolio() {
-  // const positionKey = {
-  //   ticker: 'Ticker',
-  //   purchasePrice: 'Price',
-  //   quantity: 'Quantity',
-  //   totalVal: 'Total Value',
-  //   profLoss: 'Profit/Loss',
-  // };
-  const testPosition = {
-    ticker: 'AMC',
-    purchasePrice: 5000,
-    quantity: 2,
-    totalVal: 10000,
-    profLoss: 2000,
-  };
-  const testPosition2 = {
-    ticker: 'TEST',
-    purchasePrice: 10000,
-    quantity: 3,
-    totalVal: 30000,
-    profLoss: 1000,
-  };
   const testBalance = {
     totalVal: 100000,
     cash: 20000,
     portfolioBal: 120000,
   };
 
-  const [positionArr, setPositionArr] = useState([testPosition, testPosition2]);
+  const [positionArr, setPositionArr] = useState([]);
 
-  // UNCOMMENT WHEN BACKEND HANDLES PORTFOLIO INFO
-  // port might be wrong too
-  // useEffect(() => {
-  //   getPortfolioData();
-  // }, []);
+  const [prices, setPrices] = useState([]);
+
+  useEffect(() => {
+    getPortfolioData();
+  }, []);
 
   const getPortfolioData = () => {
     fetch('http://localhost:4000/portfolio', {
@@ -50,6 +29,20 @@ export default function Portfolio() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        setPositionArr(data[0]);
+        setPrices(data[1]);
+        console.log('');
+      });
+  };
+
+  const syncPrices = () => {
+    fetch('http://localhost:4000/portfolio/sync', {
+      method: 'GET',
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('DATA FROM SYNC: ', data);
+        setPrices(data[0]);
       });
   };
 
@@ -68,9 +61,35 @@ export default function Portfolio() {
           paddingTop: '8px',
         }}
       >
-        {positionArr.map((el) => (
-          <PortfolioTicket ticketInfo={el} key={'key ' + el.ticker} />
-        ))}
+        <button onClick={syncPrices}>SYNC</button>
+        <table id='portfoliotable'>
+          <thead id='titlehead'>
+            <tr id='titlerow'>
+              <td className='ticketkey'>Ticker</td>
+              <td className='ticketkey'>Price</td>
+              <td className='ticketkey' style={{ marginRight: '8px' }}>
+                Quantity
+              </td>
+              <td className='ticketkey' style={{ marginRight: '4px' }}>
+                Total Value
+              </td>
+              <td className='ticketkey'>Profit/Loss</td>
+            </tr>
+          </thead>
+          <tbody id='porttablebody'>
+            {positionArr.map((el) => (
+              <tr id='portfolioticket'>
+                <PortfolioTicket
+                  ticketInfo={el}
+                  priceInfo={prices.find((element) => {
+                    return element.ticker === el.ticker;
+                  })}
+                  key={'key ' + el.ticker}
+                />
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
       <BalancesDisplay balanceInfo={testBalance} />
     </>

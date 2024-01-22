@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 export default function BalancesDisplay(props) {
   return (
-    <div>
-      <p>
+    <div className="totalsBox">
+      <p id="totalP">
         Total Portfolio Value: $
         {Math.floor(props.balanceInfo.totalVal).toLocaleString('en-US')}
       </p>

@@ -5,11 +5,12 @@ export default function BalancesDisplay(props) {
     <div>
       <p>
         Total Portfolio Value: $
-        {props.balanceInfo.totalVal.toLocaleString('en-US')}
+        {Math.floor(props.balanceInfo.totalVal).toLocaleString('en-US')}
       </p>
-      <p>Cash: ${props.balanceInfo.cash.toLocaleString('en-US')}</p>
+      <p>Cash: ${Math.floor(props.balanceInfo.cash).toLocaleString('en-US')}</p>
       <p>
-        Total Value: ${props.balanceInfo.portfolioBal.toLocaleString('en-US')}
+        Total Value: $
+        {Math.floor(props.balanceInfo.portfolioBal).toLocaleString('en-US')}
       </p>
     </div>
   );

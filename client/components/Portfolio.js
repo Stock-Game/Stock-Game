@@ -54,9 +54,8 @@ export default function Portfolio() {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          border: '2px solid black',
+          border: '2px solid white',
           width: '400px',
-          height: '600px',
           alignItems: 'center',
           paddingTop: '8px',
         }}

@@ -61,11 +61,10 @@ export default function OrderTicket() {
 
   return (
     <>
-      <h1>Trade</h1>
       <div>
         <div className='orderBox'>
           <form onSubmit={handleSubmit}>
-            <div className='row'>
+            <div className='row2'>
               <textarea
                 placeholder='Enter a stock ticker'
                 rows='1'

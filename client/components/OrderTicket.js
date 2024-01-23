@@ -7,7 +7,7 @@ export default function OrderTicket() {
   const [order, setOrder] = useState({
     ticker: '',
     price: '',
-    quantity: 0,
+    quantity: 0,  
     total: '',
     action: 'buy',
   });
@@ -71,7 +71,7 @@ export default function OrderTicket() {
                 value={ticker}
                 onChange={handleTickerChange}
               />
-              <button disabled={ticker.length === 0}>Submit</button>
+              <button disabled={ticker.length === 0}>Search</button>
             </div>
           </form>
           <table>

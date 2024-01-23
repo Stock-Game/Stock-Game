@@ -4,27 +4,29 @@ const path = require('path');
 const testJsonFile = path.resolve(__dirname, './portfolios.test.json');
 
 describe('portfolioController', () => {
-  // dependencies: model.find, model.save, model.create, req, res, next
+  // dependencies: model.find, doc.save, model.create, req, res, next
   // look at unit-12 db
+  const mockReq = {
+    body: {
+      ticker: 'BABA',
+      priceBought: 100,
+      dateBought: new Date(),
+      shares: 4,
+      totalCost: 400,
+      save: jest.fn(),
+    },
+  };
   const mockModel = {
-    find: jest.fn(() => {
-      return JSON.parse(fs.readFileSync(testJsonFile));
-    }),
-    save: jest.fn(),
-    create: jest.fn(),
+    create: jest.fn(() => 'mock portfolio'),
   };
 
+  afterEach(() => {
+    fs.writeFileSync(testJsonFile, JSON.stringify([]));
+  });
+
   describe('portfolioController.buy', () => {
-    const mockReq = {
-      body: {
-        ticker: 'BABA',
-        priceBought: 100,
-        dateBought: new Date(),
-        shares: 4,
-        totalCost: 400,
-      },
-    };
-    const mockRes = {};
+    mockModel.find = jest.fn(() => []);
+    const mockRes = { locals: {} };
     const mockNext = jest.fn();
 
     it('should call model.find', () => {
@@ -40,33 +42,28 @@ describe('portfolioController', () => {
     describe('creating new portfolio', () => {
       beforeEach(() => {
         fs.writeFileSync(testJsonFile, JSON.stringify([]));
+        // mockModel.find = jest.fn(() => []);
       });
       it('should call model.create when no ticket found', () => {
         subject.buy(mockReq, mockRes, mockNext, mockModel);
         expect(mockModel.create).toHaveBeenCalled();
       });
-      xit('should create new portfolio into db when no ticket found', () => {
-        subject.buy(mockReq, mockRes, mockNext, mockModel);
+      it('should add that new portfolio onto res.locals.buy', async () => {
+        await subject.buy(mockReq, mockRes, mockNext, mockModel);
+        expect(mockRes.locals.buy).toEqual('mock portfolio');
       });
-      xit('should add that new portfolio onto res.locals.buy', () => {});
     });
 
-    xdescribe('updating existing portfolio', () => {
+    describe('updating existing portfolio', () => {
       beforeEach(() => {
-        fs.writeFileSync(
-          testJsonFile,
-          JSON.stringify([
-            {
-              ticker: 'BABA',
-              priceBought: 100,
-              dateBought: new Date(),
-              shares: 4,
-              totalCost: 400,
-            },
-          ])
-        );
+        fs.writeFileSync(testJsonFile, JSON.stringify([mockReq.body]));
+        mockModel.find = jest.fn(() => [mockReq.body]);
+        console.log('mockreq.body', mockReq.body);
       });
-      xit('', () => {});
+      it('should call doc.save', async () => {
+        await subject.buy(mockReq, mockRes, mockNext, mockModel);
+        expect(mockReq.body.save).toHaveBeenCalled();
+      });
       xit('', () => {});
       xit('', () => {});
       xit('', () => {});

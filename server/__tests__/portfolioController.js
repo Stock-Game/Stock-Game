@@ -38,6 +38,9 @@ describe('portfolioController', () => {
       subject.buy(mockReq, mockRes, mockNext, mockModel);
       expect(mockReq).toEqual(reqPreBuy);
     });
+    afterEach(() => {
+      fs.writeFileSync(testJsonFile, JSON.stringify([]));
+    });
 
     describe('creating new portfolio', () => {
       beforeEach(() => {
@@ -58,15 +61,27 @@ describe('portfolioController', () => {
       beforeEach(() => {
         fs.writeFileSync(testJsonFile, JSON.stringify([mockReq.body]));
         mockModel.find = jest.fn(() => [mockReq.body]);
-        console.log('mockreq.body', mockReq.body);
       });
       it('should call doc.save', async () => {
         await subject.buy(mockReq, mockRes, mockNext, mockModel);
         expect(mockReq.body.save).toHaveBeenCalled();
       });
-      xit('', () => {});
-      xit('', () => {});
-      xit('', () => {});
+      it('should add a portfolio to locals', () => {
+        subject.buy(mockReq, mockRes, mockNext, mockModel);
+        expect(mockRes.locals.buy).toBeTruthy;
+      });
+      it('portfolio should have updated shares', () => {
+        subject.buy(mockReq, mockRes, mockNext, mockModel);
+        expect(mockRes.locals.buy.shares).toEqual(mockReq.body.shares);
+      });
+      it('portfolio should have updated totalCost', () => {
+        subject.buy(mockReq, mockRes, mockNext, mockModel);
+        expect(mockRes.locals.buy.totalCost).toEqual(mockReq.body.totalCost);
+      });
+      it('portfolio should have updated priceBought', () => {
+        subject.buy(mockReq, mockRes, mockNext, mockModel);
+        expect(mockRes.locals.buy.priceBought).toEqual(mockReq.body.priceBought);
+      });
     });
   });
 });

@@ -21,6 +21,8 @@ portfolioController.buy = async (req, res, next, model = model) => {
     const { ticker, priceBought, dateBought, shares, totalCost } = req.body;
     // TODO: convert to findOne for clarity
     const stock = await model.find({ ticker });
+    // console.log('stock', stock);
+    // console.log('stock.length !== 0', stock.length !== 0);
     if (stock.length !== 0) {
       // this syntax is weird. is it for compactness?
       (stock[0].shares += shares), (stock[0].totalCost += totalCost);

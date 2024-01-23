@@ -1,4 +1,4 @@
-const subject = require('../server/controllers/portfolioController.js');
+const subject = require('../controllers/portfolioController.js');
 const fs = require('fs');
 const path = require('path');
 const testJsonFile = path.resolve(__dirname, './portfolios.test.json');
@@ -31,15 +31,15 @@ describe('portfolioController', () => {
       subject.buy(mockReq, mockRes, mockNext, mockModel);
       expect(mockModel.find).toHaveBeenCalled();
     });
+    it('should not change the request', () => {
+      const reqPreBuy = mockReq;
+      subject.buy(mockReq, mockRes, mockNext, mockModel);
+      expect(mockReq).toEqual(reqPreBuy);
+    });
 
     describe('creating new portfolio', () => {
       beforeEach(() => {
         fs.writeFileSync(testJsonFile, JSON.stringify([]));
-      });
-      it('should not change the request', () => {
-        const reqPreBuy = mockReq;
-        subject.buy(mockReq, mockRes, mockNext, mockModel);
-        expect(mockReq).toEqual(reqPreBuy);
       });
       it('should call model.create when no ticket found', () => {
         subject.buy(mockReq, mockRes, mockNext, mockModel);
@@ -49,6 +49,27 @@ describe('portfolioController', () => {
         subject.buy(mockReq, mockRes, mockNext, mockModel);
       });
       xit('should add that new portfolio onto res.locals.buy', () => {});
+    });
+
+    xdescribe('updating existing portfolio', () => {
+      beforeEach(() => {
+        fs.writeFileSync(
+          testJsonFile,
+          JSON.stringify([
+            {
+              ticker: 'BABA',
+              priceBought: 100,
+              dateBought: new Date(),
+              shares: 4,
+              totalCost: 400,
+            },
+          ])
+        );
+      });
+      xit('', () => {});
+      xit('', () => {});
+      xit('', () => {});
+      xit('', () => {});
     });
   });
 });

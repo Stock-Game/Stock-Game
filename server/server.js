@@ -13,6 +13,7 @@ mongooose
 const newsRouter = require('./routers/newsRouter');
 const orderTicketRouter = require('./routers/orderTicketRouter');
 const portfolioRouter = require('./routers/portfolioRouter');
+const userRouter = require('./routers/userRouter');
 
 const PORT = process.env.PORT;
 

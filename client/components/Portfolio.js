@@ -81,14 +81,6 @@ export default function Portfolio() {
     <>
       <div
         id='portfoliocontainer'
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          border: '2px solid white',
-          width: '400px',
-          alignItems: 'center',
-          paddingTop: '8px',
-        }}
       >
         <button onClick={syncPrices}>SYNC</button>
         <table id='portfoliotable'>

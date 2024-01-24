@@ -29,7 +29,6 @@ describe('Order Ticket', () => {
   });
 });
 
-('');
 
 // 3. The functions passed down should be invoked on click
 // test("The functions passed down should be invoked on click", () => {

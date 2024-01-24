@@ -23,7 +23,7 @@ const NewsDisplay = () => {
   // Display news
   return (
     <>
-      <h1>Top Stock Mentions</h1>
+      <h1>Trending Stocks on Reddit in the past 24 hours</h1>
       <table>
         <thead>
           <tr>
@@ -35,7 +35,6 @@ const NewsDisplay = () => {
           </tr>
         </thead>
         <tbody>
-          //show top 3 results
           {reddit.slice(0, 3).map((item, index) => (
             <tr key={index}>
               <td>{item.rank}</td>

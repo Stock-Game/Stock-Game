@@ -33,6 +33,7 @@ app.use(express.static(path.resolve(__dirname, '../client/static')));
 app.use('/news', newsRouter);
 app.use('/orderticket/', orderTicketRouter);
 app.use('/portfolio', portfolioRouter);
+app.use('/logup', userRouter);
 
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));

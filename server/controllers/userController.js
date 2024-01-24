@@ -38,21 +38,9 @@ req.body should be:
 userController.verifyUser = async (req, res, next) => {
   try {
     const { username, password } = req.body;
-    const user = await User.findOne(username);
+    const user = await User.findOne({ username, password }); // null if none found
 
-    if (!user) res.locals.userExists = false;
-    // verify password
-    else if (user.password !== password) {
-      // password does not match! what do...
-      res.locals.userExists = true;
-      res.locals.passwordMatches = false;
-      // res.locals.id = data._id;
-    } else {
-      // user and password match
-      res.locals.userExists = true;
-      res.locals.passwordMatches = true;
-      res.locals.id = data._id;
-    }
+    if (user) res.locals.id = data._id;
 
     return next();
   } catch (err) {

@@ -12,8 +12,6 @@ export default function HomePage() {
         <Portfolio />
       </div>
       <NewsDisplay />
-      <br />
-      <br />
       <Signup />
     </div>
   );

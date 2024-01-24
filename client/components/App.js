@@ -9,8 +9,14 @@ import HomePage from './HomePage';
 
 export default function App() {
   return (
-    <div>
-      <h1>Trading Simulator</h1>
+    <div className='app'>
+      <span>
+        <img
+          height='150px'
+          src='https://justkillingti.me/wp-content/2016/09/trading-places-aykroyd-murphy.png'
+        />
+        <h1>Trading Simulator</h1>
+      </span>
       <br />
       <h1>Buy or sell a stock:</h1>
 

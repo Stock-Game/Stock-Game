@@ -47,5 +47,4 @@ const NewsDisplay = () => {
     </>
   );
 };
-
 export default NewsDisplay;

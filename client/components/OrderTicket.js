@@ -155,6 +155,7 @@ export default function OrderTicket() {
                         `Placing a ${order.action} order for ${order.quantity} shares of ${order.ticker} at ${order.price}`
                       );
                       location.reload();
+
                       submitOrder();
                     }}
                     disabled={order.total === ''}

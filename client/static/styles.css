@@ -129,3 +129,14 @@ textarea {
   resize: none;
   margin: 10px;
 }
+
+#portfoliocontainer {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid white;
+  width: '400px';
+  align-items: 'center';
+  padding-top: '8px';
+
+}
+

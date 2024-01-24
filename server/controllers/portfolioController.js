@@ -13,7 +13,8 @@ const Price = require('../model/priceModel.js');
   - and sticks that updated portfolio on res.locals.buy
   - if not found, inserts that portfolio into the db, and updates locals
   - throws an error on next if find, save, or create throw an error
-  model is passed in for dependency injection testing
+  for testing, add in param model; but it breaks server
+  - model is passed in for dependency injection testing
  */
 portfolioController.buy = async (req, res, next) => {
   try {
@@ -53,14 +54,20 @@ portfolioController.buy = async (req, res, next) => {
   }
 };
 
+/*
+for testing, add in param model; but it breaks server
+  - model is passed in for dependency injection testing
+ */
 portfolioController.sell = async (req, res, next) => {
   console.log('---> ENTERING PORTFOLIO CONTROLLER SELL <---');
   const { ticker, priceSold, shares, totalCost } = req.body;
   const stock = await model.find({ ticker });
+  // console.log('req.body', req.body);
+  // console.log('stock', stock);
   if (shares < stock[0].shares) {
     (stock[0].shares -= shares),
-      (stock[0].totalCost -= stock[0].priceBought * shares),
-      await stock[0].save();
+      (stock[0].totalCost -= stock[0].priceBought * shares);
+    await stock[0].save();
     console.log('Sent to Mongo');
     res.locals.sell = stock[0];
     return next();

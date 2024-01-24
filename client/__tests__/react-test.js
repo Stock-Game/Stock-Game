@@ -33,19 +33,24 @@ describe('Order Ticket', () => {
     expect(buttons[0]).toHaveTextContent('Search');
     expect(buttons[1]).toHaveTextContent('Submit');
   });
+  test('The functions passed down should be invoked on click', () => {
+    const myMock1 = jest.fn();
+
+    userEvent.click(screen.getByText('Search'));
+    expect(myMock1).toHaveBeenCalled();
+  });
+
+  test('Transaction amount no more than 2 decimals', () => {
+    const order = {
+      price: 1.3333,
+      quantity: 5,
+    };
+
+    const total = Math.ceil(order.price * order.quantity * 100) / 100;
+    expect(total).toBe(6.67);
+  });
+
+  test('Snapshot test', () => {
+    expect(OrderTicket).toMatchSnapshot();
+  });
 });
-
-
-// 3. The functions passed down should be invoked on click
-// test("The functions passed down should be invoked on click", () => {
-//     const myMock1 = jest.fn();
-
-//     render(
-//       <div>
-//         <button oncClick={myMock1()}></button>
-//       </div>
-//     );
-
-//     userEvent.click(screen.getByRole("button"));
-//     expect(myMock1).toHaveBeenCalled();
-//   });

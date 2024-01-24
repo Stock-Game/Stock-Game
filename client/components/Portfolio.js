@@ -71,7 +71,7 @@ export default function Portfolio() {
     console.log('price bought: ', priceBought);
     setBalance({
       totalVal: totalPortVal,
-      cash,
+      cash: cash - priceBought,
       portfolioBal: cash + totalPortVal,
     });
   };

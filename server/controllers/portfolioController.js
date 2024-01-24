@@ -3,16 +3,32 @@ const axios = require('axios');
 const model = require('../model/model.js');
 const Price = require('../model/priceModel.js');
 
-portfolioController.buy = async (req, res, next) => {
+/*
+ buy is middleware which:
+  - finds a portfolio from the portfolio model/doc which matches the request's ticker val
+  - if found, updates that portfolio with:
+    - shares increased by request.shares
+    - totalCost increased by request.totalCost
+    - priceBought updates to updated totalCost / updated shares
+  - and sticks that updated portfolio on res.locals.buy
+  - if not found, inserts that portfolio into the db, and updates locals
+  - throws an error on next if find, save, or create throw an error
+  model is passed in for dependency injection testing
+ */
+portfolioController.buy = async (req, res, next, model = model) => {
   try {
     console.log('---> ENTERING PORTFOLIO CONTROLLER BUY <---');
     const { ticker, priceBought, dateBought, shares, totalCost } = req.body;
+    // TODO: convert to findOne for clarity
     const stock = await model.find({ ticker });
+    console.log('stock', stock);
+    // console.log('stock.length !== 0', stock.length !== 0);
     if (stock.length !== 0) {
+      // this syntax is weird. is it for compactness?
       (stock[0].shares += shares), (stock[0].totalCost += totalCost);
-      (stock[0].priceBought =
-        (stock[0].totalCost + totalCost) / (stock[0].shares + shares)),
-        await stock[0].save();
+      stock[0].priceBought =
+        (stock[0].totalCost + totalCost) / (stock[0].shares + shares);
+      await stock[0].save();
       console.log('Sent to Mongo');
       res.locals.buy = stock[0];
       return next();

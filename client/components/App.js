@@ -15,7 +15,7 @@ export default function App() {
       <h1>Buy or sell a stock:</h1>
 
       <Routes>
-        <Route exact path='/signup' component={<Signup />} />
+        <Route exact path='/logup/signup' element={<Signup />} />
         <Route index element={<HomePage />} />
         {/* <Route exact path='/' component={HomePage} /> */}
       </Routes>

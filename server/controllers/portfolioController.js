@@ -15,7 +15,7 @@ const Price = require('../model/priceModel.js');
   - throws an error on next if find, save, or create throw an error
   model is passed in for dependency injection testing
  */
-portfolioController.buy = async (req, res, next, model = model) => {
+portfolioController.buy = async (req, res, next) => {
   try {
     console.log('---> ENTERING PORTFOLIO CONTROLLER BUY <---');
     const { ticker, priceBought, dateBought, shares, totalCost } = req.body;

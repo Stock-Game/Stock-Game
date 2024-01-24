@@ -3,7 +3,7 @@ const userController = require('../controllers/userController');
 const router = express.Router();
 
 // routing goal: if signup successful, serve the user's dashboard
-router.post('/', userController.createUser, (req, res, next) => {
+router.post('/', userController.create, (req, res, next) => {
   console.log('---> ENTERING USER CREATE ROUTER <---');
   // options:
   //  backend redirects to a dashboard route, passing along the user id on res:

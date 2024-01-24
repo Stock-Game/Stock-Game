@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
-const API_URL = 'https://tradestie.com/api/v1/apps/reddit';
+// pull data from localhost:4000/data
+const API_URL = 'http://localhost:4000/data';
 
 const NewsDisplay = () => {
   const [reddit, setReddit] = useState([]);
-
+  // fetch data from localhost:4000/data
   useEffect(() => {
     const fetchReddit = async () => {
       try {
         const response = await axios.get(API_URL);
-        const data = response.data;
+        const data = response.data.results;
         console.log('Reddit response:', data);
         setReddit(data);
       } catch (error) {
@@ -20,26 +20,29 @@ const NewsDisplay = () => {
 
     fetchReddit();
   }, []);
-
+  // Display news
   return (
     <>
-      <h1>r/WallStreetBets: Top stock ideas</h1>
+      <h1>Top Stock Mentions</h1>
       <table>
         <thead>
           <tr>
-            <th>No. of Comments</th>
-            <th>Sentiment</th>
-            <th>Sentiment Score</th>
+            <th>Rank</th>
             <th>Ticker</th>
+            <th>Name</th>
+            <th>Mentions</th>
+            <th>Upvotes</th>
           </tr>
         </thead>
         <tbody>
-          {reddit.map((item, index) => (
+          //show top 3 results
+          {reddit.slice(0, 3).map((item, index) => (
             <tr key={index}>
-              <td>{item.no_of_comments}</td>
-              <td>{item.sentiment}</td>
-              <td>{item.sentiment_score}</td>
+              <td>{item.rank}</td>
               <td>{item.ticker}</td>
+              <td>{item.name}</td>
+              <td>{item.mentions}</td>
+              <td>{item.upvotes}</td>
             </tr>
           ))}
         </tbody>
@@ -47,4 +50,5 @@ const NewsDisplay = () => {
     </>
   );
 };
+
 export default NewsDisplay;

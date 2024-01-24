@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
+const axios = require('axios');
 const app = express();
 const mongoose = require('mongoose');
 
@@ -33,6 +34,18 @@ app.use('/portfolio', portfolioRouter);
 
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
+});
+
+app.get('/data', async (req, res) => {
+  try {
+    const response = await axios.get(
+      'https://apewisdom.io/api/v1.0/filter/all-stocks/page/1'
+    );
+    res.json(response.data);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 app.use((req, res, next) => {

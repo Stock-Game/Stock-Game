@@ -7,7 +7,7 @@ export default function OrderTicket() {
   const [order, setOrder] = useState({
     ticker: '',
     price: '',
-    quantity: 0,  
+    quantity: 0,
     total: '',
     action: 'buy',
   });
@@ -69,12 +69,12 @@ export default function OrderTicket() {
   return (
     <>
       <div>
-        <div className='orderBox'>
+        <div className="orderBox">
           <form onSubmit={handleSubmit}>
-            <div className='row2'>
+            <div className="row2">
               <textarea
-                placeholder='Enter a stock ticker'
-                rows='1'
+                placeholder="Enter a stock ticker"
+                rows="1"
                 value={ticker}
                 onChange={handleTickerChange}
               />
@@ -101,7 +101,7 @@ export default function OrderTicket() {
                 </td>
                 <td>
                   <input
-                    type='number'
+                    type="number"
                     value={order.quantity || ''}
                     onChange={(e) => {
                       setOrder({
@@ -134,8 +134,8 @@ export default function OrderTicket() {
                       });
                     }}
                   >
-                    <option value='buy'>Buy</option>
-                    <option value='sell'>Sell</option>
+                    <option value="buy">Buy</option>
+                    <option value="sell">Sell</option>
                   </select>
                 </td>
               </tr>
@@ -154,6 +154,8 @@ export default function OrderTicket() {
                       console.log(
                         `Placing a ${order.action} order for ${order.quantity} shares of ${order.ticker} at ${order.price}`
                       );
+                      location.reload();
+
                       submitOrder();
                     }}
                     disabled={order.total === ''}

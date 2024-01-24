@@ -3,9 +3,9 @@ const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
 const app = express();
-const mongooose = require('mongoose');
+const mongoose = require('mongoose');
 
-mongooose
+mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log('DB Connected (ﾉ^ヮ^)ﾉ*:･ﾟ✧'))
   .catch((err) => console.log(err));
@@ -17,20 +17,18 @@ const portfolioRouter = require('./routers/portfolioRouter');
 const PORT = process.env.PORT;
 
 const corsOptions = {
-  origin: '*',
+  origin: 'http://localhost:8080',
   credentials: true,
   optionSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 app.use(express.static(path.resolve(__dirname, '../client/static')));
 
 app.use('/news', newsRouter);
-app.use('/orderticket/', orderTicketRouter);
+app.use('/orderticket', orderTicketRouter);
 app.use('/portfolio', portfolioRouter);
 
 app.get('/', (req, res) => {

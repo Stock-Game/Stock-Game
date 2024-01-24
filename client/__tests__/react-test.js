@@ -14,9 +14,15 @@ describe('Order Ticket', () => {
     ticket = render(<OrderTicket />);
   });
 
-  test('should display ticker and price', () => {
+  test('should display order ticket', () => {
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
     expect(screen.getByText('Ticker')).toBeInTheDocument();
     expect(screen.getByText('Price')).toBeInTheDocument();
+    expect(screen.getByText('Quantity')).toBeInTheDocument();
+    expect(screen.getByText('Total Transaction Amount')).toBeInTheDocument();
+    expect(screen.getByText('Action')).toBeInTheDocument();
+    expect(screen.getByText('Buy')).toBeInTheDocument();
+    expect(screen.getByText('Sell')).toBeInTheDocument();
   });
 
   test('contains buttons labeled Search and Submit', () => {

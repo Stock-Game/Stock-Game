@@ -1,3 +1,21 @@
+.app {
+ font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
+}
+
+span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: #848899, */
+}
+
+span img {
+
+    border-radius: 15px;
+    height: 150px;
+    margin-right: 10px;
+}
+
 #portfolioticket {
   display: flex;
   flex-direction: row;
@@ -33,10 +51,10 @@
   margin-left: 20px;
 }
 #quantitystyle {
-  marginright: '8px';
+  margin-right: '8px';
 }
 #valuestyle {
-  marginright: '4px';
+  margin-right: '4px';
 }
 .ticketcells,
 td,
@@ -84,11 +102,14 @@ div {
   justify-content: space-evenly;
   align-items: center;
   border-radius: 15px;
+  padding: 10px;
 }
 
 #totalP {
   display: flex;
   flex-direction: column;
+  padding: 10px;
+  margin: 40px;
   /* margin-top: 2em; */
   /* margin: 1em; */
 }
@@ -128,4 +149,13 @@ tr {
 textarea {
   resize: none;
   margin: 10px;
+}
+
+#portfoliocontainer {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid white;
+  width: '400px';
+  align-items: 'center';
+  padding-top: '8px';
 }

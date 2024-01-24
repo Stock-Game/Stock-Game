@@ -1,75 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+// pull data from localhost:4000/data
+const API_URL = 'http://localhost:4000/data';
 
-export default function NewsDisplay() {
-  // initialize state variables
-  const fakeData = [
-    {
-      no_of_comments: 179,
-      sentiment: 'Bullish',
-      sentiment_score: 0.13,
-      ticker: 'GME',
-    },
-    {
-      no_of_comments: 37,
-      sentiment: 'Bullish',
-      sentiment_score: 0.159,
-      ticker: 'AMC',
-    },
-    {
-      no_of_comments: 17,
-      sentiment: 'Bullish',
-      sentiment_score: 0.22,
-      ticker: 'PLTR',
-    },
-  ];
+const NewsDisplay = () => {
+  const [reddit, setReddit] = useState([]);
+  // fetch data from localhost:4000/data
+  useEffect(() => {
+    const fetchReddit = async () => {
+      try {
+        const response = await axios.get(API_URL);
+        const data = response.data.results;
+        console.log('Reddit response:', data);
+        setReddit(data);
+      } catch (error) {
+        console.error('Fetch error:', error.message);
+      }
+    };
 
-  const [reddit, setReddit] = useState(fakeData);
-  // update using get request to /news
-  const axiosFetchReddit = async () => {
-    await axios
-      .get(`http://localhost:4000/news`)
-      .then((res) => {
-
-        // setReddit(res.data);
-        console.log('reddit response', res);
-      })
-      .catch((err) => console.log('error: ', err));
-  };
-
-  axiosFetchReddit();
-
+    fetchReddit();
+  }, []);
+  // Display news
   return (
     <>
-      <h1>r/WallStreetBets: Top stock ideas</h1>
+      <h1>Top Stock Mentions</h1>
       <table>
-        <tbody>
+        <thead>
           <tr>
+            <th>Rank</th>
             <th>Ticker</th>
-            <th>Sentiment</th>
-            <th>Number of comments</th>
-            <th>Sentiment score</th>
+            <th>Name</th>
+            <th>Mentions</th>
+            <th>Upvotes</th>
           </tr>
-          <tr>
-            <td>{reddit[0].ticker}</td>
-            <td>{reddit[0].sentiment}</td>
-            <td>{reddit[0].no_of_comments}</td>
-            <td>{reddit[0].sentiment_score}</td>
-          </tr>
-          <tr>
-            <td>{reddit[1].ticker}</td>
-            <td>{reddit[1].sentiment}</td>
-            <td>{reddit[1].no_of_comments}</td>
-            <td>{reddit[1].sentiment_score}</td>
-          </tr>
-          <tr>
-            <td>{reddit[2].ticker}</td>
-            <td>{reddit[2].sentiment}</td>
-            <td>{reddit[2].no_of_comments}</td>
-            <td>{reddit[2].sentiment_score}</td>
-          </tr>
+        </thead>
+        <tbody>
+          //show top 3 results
+          {reddit.slice(0, 3).map((item, index) => (
+            <tr key={index}>
+              <td>{item.rank}</td>
+              <td>{item.ticker}</td>
+              <td>{item.name}</td>
+              <td>{item.mentions}</td>
+              <td>{item.upvotes}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </>
   );
-}
+};
+
+export default NewsDisplay;

@@ -22,7 +22,7 @@ export default function PortfolioTicket(props) {
         {Math.floor(
           (props.priceInfo.price - props.ticketInfo.priceBought) *
             props.ticketInfo.shares
-        )}
+        ).toLocaleString('en-US')}
       </td>
     </>
   );

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export default function OrderTicket() {
-  // set state
+  // set default state
   const [ticker, setTicker] = useState('');
   const [order, setOrder] = useState({
     ticker: '',
@@ -24,7 +24,7 @@ export default function OrderTicket() {
     axiosSyncData();
     setTicker('');
   };
-
+  //fetch from orderTicket
   const axiosFetchData = async () => {
     await axios
       .get(`http://localhost:4000/orderTicket`, {
@@ -39,7 +39,7 @@ export default function OrderTicket() {
       })
       .catch((err) => console.log('error: ', err));
   };
-
+  // get orderTicket and sync with portfolio
   const axiosSyncData = async () => {
     await axios
       .get('http://localhost:4000/portfolio/sync')
@@ -78,7 +78,7 @@ export default function OrderTicket() {
                 value={ticker}
                 onChange={handleTickerChange}
               />
-              <button disabled={ticker.length === 0}>Submit</button>
+              <button disabled={ticker.length === 0}>Search</button>
             </div>
           </form>
           <table>
@@ -117,7 +117,10 @@ export default function OrderTicket() {
                 <td>
                   <strong>Total Transaction Amount</strong>
                 </td>
-                <td>{order.price * order.quantity || ''}</td>
+                <td>
+                  {Math.ceil((order.price * order.quantity) * 100) / 100 || ''}
+                  {/* {Math.ceil(((order.price * order.quantity) * 100) / 100) || ''} */}
+                </td>
               </tr>
               <tr>
                 <td>
@@ -154,7 +157,10 @@ export default function OrderTicket() {
                       console.log(
                         `Placing a ${order.action} order for ${order.quantity} shares of ${order.ticker} at ${order.price}`
                       );
+                      // reload on submit before and after submitOrder function
+                      location.reload();
                       submitOrder();
+                      location.reload();
                     }}
                     disabled={order.total === ''}
                   >

@@ -13,6 +13,7 @@ mongoose
 const newsRouter = require('./routers/newsRouter');
 const orderTicketRouter = require('./routers/orderTicketRouter');
 const portfolioRouter = require('./routers/portfolioRouter');
+const userRouter = require('./routers/userRouter');
 
 const PORT = process.env.PORT;
 
@@ -30,6 +31,7 @@ app.use(express.static(path.resolve(__dirname, '../client/static')));
 app.use('/news', newsRouter);
 app.use('/orderticket', orderTicketRouter);
 app.use('/portfolio', portfolioRouter);
+app.use('/logup', userRouter);
 
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
